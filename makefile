@@ -1,18 +1,18 @@
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -Wall -Wextra -std=c++11
+CXXFLAGS = -Wall -Wextra -std=c++11 -MMD -MP
 
 # Target executable
-TARGET = main
+TARGET = go
 
 # Source files
-SRCS = main.cpp lexer.cpp symbole.cpp
+SRCS = main.cpp lexer.cpp symbole.cpp automate.cpp Etat.cpp Expr.cpp
 
 # Object files
 OBJS = $(SRCS:.cpp=.o)
 
-# Header files
-HEADERS = lexer.h symbole.h
+# Dependency files
+DEPS = $(OBJS:.o=.d)
 
 # Default target
 all: $(TARGET)
@@ -22,12 +22,15 @@ $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
 
 # Compile source files into object files
-%.o: %.cpp $(HEADERS)
+%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Include dependency files
+-include $(DEPS)
 
 # Clean up build files
 clean:
-	rm -f $(TARGET) $(OBJS)
+	rm -f $(TARGET) $(OBJS) $(DEPS)
 
 # Phony targets
 .PHONY: all clean

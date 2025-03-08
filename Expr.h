@@ -4,6 +4,7 @@
 #include "symbole.h"
 using namespace std;
 
+//Classe abstraite
 class Expr: public Symbole {
     public:
         Expr() : Symbole (EXPR) {}
@@ -14,14 +15,14 @@ class Expr: public Symbole {
 
     protected:
         double valeur;
-}
+};
 
 
 class ExprBin : public Expr
 {
     public:
         
-        ExpressionBin(Expr* gauche, Expr* droite);
+        ExprBin(Expr* gauche, Expr* droite);
         
         virtual ~ExprBin();
         
@@ -46,7 +47,7 @@ class ExprMult:public ExprBin
     public:
         ExprMult(Expr* gauche, Expr* droite);
         ~ExprMult();
-    double eval();
+        double eval();
 };
 
 class ExprVal:public Expr

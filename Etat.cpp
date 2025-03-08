@@ -1,6 +1,6 @@
 #include "Etat.h"
 #include "automate.h"
-#include "symbole.h"
+#include "Expr.h"
 
 #include <iostream>
 
@@ -68,10 +68,13 @@ bool E3::transition(Automate & automate, Symbole * s) {
     switch (*s) {
         case PLUS:
         case MULT:
+            s1 = (Entier*) automate.popSymbole();
+            automate.reduction(5, new ExprVal(s1->getValeur()));
+            break;
         case CLOSEPAR:
         case FIN:
             s1 = (Entier*) automate.popSymbole();
-            automate.reduction(5, new ExprVal(s1->getValeur()));
+            automate.reduction(5, new ExprPlus(new ExprVal(0), new ExprVal(s1->getValeur())));
             break;
         default:
             automate.decalage(new Symbole(ERREUR), NULL);
@@ -82,6 +85,9 @@ bool E3::transition(Automate & automate, Symbole * s) {
 
 bool E4::transition(Automate & automate, Symbole * s) {
     switch (*s) {
+        case EXPR:
+            automate.transitionSimple(s, new E7);
+            break;
         case INT:
             automate.decalage(s, new E3);
             break;
@@ -97,6 +103,9 @@ bool E4::transition(Automate & automate, Symbole * s) {
 
 bool E5::transition(Automate & automate, Symbole * s) {
     switch (*s) {
+        case EXPR:
+            automate.transitionSimple(s, new E8);
+            break;
         case INT:
             automate.decalage(s, new E3);
             break;
@@ -129,16 +138,21 @@ bool E6::transition(Automate & automate, Symbole * s) {
 }
 
 bool E7::transition(Automate & automate, Symbole * s) {
+    Expr * s1;
+    Expr * s2;
+    Expr * snotused;
+    
     switch (*s) {
-        case PLUS:
-            automate.reduction(2);
-            break;
-        case MULT:
-            automate.reduction(2);
-            break;
         case CLOSEPAR:
         case FIN:
-            automate.reduction(2);
+        case PLUS:
+            s1 = (Expr*) automate.popSymbole();
+            snotused = (Expr*) automate.popSymbole();
+            s2 = (Expr*) automate.popSymbole();
+            automate.reduction(2, new ExprPlus(s1, s2));
+            break;
+        case MULT:
+            automate.decalage(s, new E5);
             break;
         default:
             automate.decalage(new Symbole(ERREUR), NULL);
@@ -148,16 +162,19 @@ bool E7::transition(Automate & automate, Symbole * s) {
 }
 
 bool E8::transition(Automate & automate, Symbole * s) {
+    Expr * s1;
+    Expr * s2;
+    Expr * snotused;
+    
     switch (*s) {
         case PLUS:
-            automate.reduction(3);
-            break;
         case MULT:
-            automate.reduction(3);
-            break;
         case CLOSEPAR:
         case FIN:
-            automate.reduction(3);
+            s1 = (Expr*) automate.popSymbole();
+            snotused = (Expr*) automate.popSymbole();
+            s2 = (Expr*) automate.popSymbole();
+            automate.reduction(3, new ExprMult(s1, s2));
             break;
         default:
             automate.decalage(new Symbole(ERREUR), NULL);
@@ -167,16 +184,17 @@ bool E8::transition(Automate & automate, Symbole * s) {
 }
 
 bool E9::transition(Automate & automate, Symbole * s) {
+    Expr * s1;
+    Expr * snotused;
+    
     switch (*s) {
         case PLUS:
-            automate.reduction(4);
-            break;
         case MULT:
-            automate.reduction(4);
-            break;
         case CLOSEPAR:
         case FIN:
-            automate.reduction(4);
+            snotused = (Expr*) automate.popSymbole();
+            s1 = (Expr*) automate.popSymbole();
+            automate.reduction(4, s1);
             break;
         default:
             automate.decalage(new Symbole(ERREUR), NULL);

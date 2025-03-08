@@ -1,11 +1,13 @@
 #include "automate.h"
-#include "symbole.h"
-#include "etat.h"
+#include "Expr.h"
+#include <iostream>
+
+using namespace std;
 
 
 Automate::Automate(Lexer* l) {
     lexer = l;
-    pile_etats.push_back(new Etat0());
+    pile_etats.push_back(new E0);
 }
 
 Automate::~Automate() {
@@ -21,13 +23,25 @@ Automate::~Automate() {
     delete lexer;
 }
 
-Automate::decalage(Symbole * s, Etat * e) {
+void Automate::decalage(Symbole * s, Etat * e) {
     pile_symboles.push_back(s);
     pile_etats.push_back(e);
+
+    s->Affiche();
+    cout << endl;
+
     lexer->Avancer();
 }
 
-Automate::reduction(int n, Symbole * s) {
+void Automate::reduction(int n, Symbole * s) {
+    
+    if (n == 5) {
+        n = 1;
+    } else {
+        n = 3;
+    }
+    
+    
     for (int i = 0; i < n; i++) {
         delete pile_etats.back();
         pile_etats.pop_back();
@@ -36,22 +50,42 @@ Automate::reduction(int n, Symbole * s) {
     pile_etats.back()->transition(*this, s);
 }
 
-Automate::transitionSimple(Symbole * s, Etat * e) {
+void Automate::transitionSimple(Symbole * s, Etat * e) {
     pile_etats.push_back(e);
     pile_symboles.push_back(s);
 }
 
-Automate::run() {
+void Automate::run() {
     Symbole * s = lexer->Consulter();
     while (pile_etats.back()->transition(*this, s)) {
         s = lexer->Consulter();
     }
+
+    cout << "Analyse terminée" << endl;
+
+    if (*pile_symboles.back() == ERREUR) {
+        cout << "Erreur de syntaxe" << endl;
+    } else {
+        cout << "Expression correcte" << endl;
+        cout << "Valeur de l'expression: ";
+        eval();
+    }
+
+
 }
 
-Automate::popSymbole() {
+Symbole* Automate::popSymbole() {
     Symbole * s = pile_symboles.back();
     pile_symboles.pop_back();
     return s;
 }
+
+
+void Automate::eval() {
+    Expr * s_expr = (Expr*) pile_symboles.back();
+    cout << s_expr->getValeur() << endl;
+}
+
+
 
 

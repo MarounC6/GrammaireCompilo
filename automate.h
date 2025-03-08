@@ -4,7 +4,9 @@
 #include <vector>
 #include "lexer.h"
 #include "symbole.h"
-#include "etat.h"
+#include "Etat.h"
+
+using namespace std;
 
 
 class Automate {
@@ -22,6 +24,8 @@ class Automate {
         void run();
 
         Symbole* popSymbole();
+
+        void eval();
 
 
     protected:

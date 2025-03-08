@@ -5,7 +5,7 @@ using namespace std;
 
 enum Identificateurs { OPENPAR, CLOSEPAR, PLUS, MULT, INT, EXPR, FIN, ERREUR };
 
-const string Etiquettes[] = { "OPENPAR", "CLOSEPAR", "PLUS", "MULT", "INT", "FIN", "ERREUR" };
+const string Etiquettes[] = { "OPENPAR", "CLOSEPAR", "PLUS", "MULT", "INT", "EXPR", "FIN", "ERREUR" };
 
 class Symbole {
    public:
@@ -21,8 +21,9 @@ class Symbole {
 class Entier : public Symbole {
    public:
       Entier(int v) : Symbole(INT), valeur(v) { }
-      ~Entier() { }
+      ~Entier() {}
       virtual void Affiche();
+      int getValeur();
    protected:
       int valeur;
 };
