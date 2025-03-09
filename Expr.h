@@ -9,7 +9,7 @@ class Expr: public Symbole {
     public:
         Expr() : Symbole (EXPR) {}
         virtual ~Expr() {}
-        virtual double eval() = 0;
+        virtual double eval() = 0; //Méthode virtuelle pure qui sera redéfinie dans les classes filles
 
         double getValeur();
 
@@ -26,7 +26,7 @@ class ExprBin : public Expr
         
         virtual ~ExprBin();
         
-        virtual double eval()=0;
+        virtual double eval()=0; //Méthode virtuelle pure qui sera redéfinie dans les classes filles
     protected:
         
         Expr* gauche;

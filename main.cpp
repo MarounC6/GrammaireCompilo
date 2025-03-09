@@ -22,6 +22,9 @@ int main(void) {
       l.Avancer();
    }
    */
+
+   //delete l;
+
    return 0;
 }
 

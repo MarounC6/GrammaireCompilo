@@ -11,6 +11,19 @@ Automate::Automate(Lexer* l) {
 }
 
 Automate::~Automate() {
+
+
+    /*
+    while (!pile_etats.empty()) {
+        delete pile_etats.back();
+        pile_etats.pop_back();
+    }
+    while (!pile_symboles.empty()) {
+        delete pile_symboles.back();
+        pile_symboles.pop_back();
+    }
+    */
+
     /*
     for (auto it = pile_etats.begin(); it != pile_etats.end(); it++) {
         delete *it;
@@ -20,7 +33,7 @@ Automate::~Automate() {
     }
     */
 
-    delete lexer;
+
 }
 
 void Automate::decalage(Symbole * s, Etat * e) {
@@ -59,10 +72,33 @@ void Automate::run() {
     Symbole * s = lexer->Consulter();
     while (pile_etats.back()->transition(*this, s)) {
         s = lexer->Consulter();
+
+        cout << "Pile des états: ";
+        for (auto it = pile_etats.begin(); it != pile_etats.end(); it++) {
+            cout << (*it)->getName() << " ";
+        }
+        cout << endl;
+        cout << "Pile des symboles: ";
+        for (auto it = pile_symboles.begin(); it != pile_symboles.end(); it++) {
+            (*it)->Affiche();
+            cout << " ";
+        }
+        cout << endl;
+        cout << "Symbole courant: ";
+        s->Affiche();
+        cout << endl;
+        cout << "--------------------------------" << endl;
+        
+
+
+
     }
 
     cout << "Analyse terminée" << endl;
 
+    eval();
+
+    /*
     if (*pile_symboles.back() == ERREUR) {
         cout << "Erreur de syntaxe" << endl;
     } else {
@@ -70,6 +106,7 @@ void Automate::run() {
         cout << "Valeur de l'expression: ";
         eval();
     }
+    */
 
 
 }
