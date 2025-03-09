@@ -27,9 +27,12 @@ class Automate {
 
         void eval();
 
+        void addSymboleToDelete(Symbole * s);
+
 
     protected:
         Lexer * lexer;
         vector<Etat*> pile_etats;
         vector<Symbole*> pile_symboles;
+        vector<Symbole*> pile_symboles_to_delete;
 };

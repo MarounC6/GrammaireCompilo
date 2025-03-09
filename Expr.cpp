@@ -54,18 +54,18 @@ double ExprVal::eval()
 
 ExprBin::~ExprBin()
 {
-    delete gauche;
-    delete droite;
+    //delete gauche;
+    //delete droite;
 }
 
 ExprMult::~ExprMult()
 {
-    delete gauche;
-    delete droite;
+    //delete gauche;
+    //delete droite;
 }
 
 ExprPlus::~ExprPlus()
 {
-    delete gauche;
-    delete droite;
+    //delete gauche;
+    //delete droite;
 }

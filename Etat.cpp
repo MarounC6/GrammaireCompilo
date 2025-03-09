@@ -72,7 +72,7 @@ bool E3::transition(Automate & automate, Symbole * s) {
         case FIN:
             s1 = (Entier*) automate.popSymbole();
             automate.reduction(5, new ExprVal(s1->getValeur()));
-            //delete s1;
+            delete s1;
             break;
         
             /*
@@ -152,11 +152,12 @@ bool E7::transition(Automate & automate, Symbole * s) {
         case PLUS:
             s1 = (Expr*) automate.popSymbole();
             snotused = (Expr*) automate.popSymbole();
-            //delete snotused;
+            delete snotused;
             s2 = (Expr*) automate.popSymbole();
             automate.reduction(2, new ExprPlus(s1, s2));
-            //delete s1;
-            //delete s2;
+            //adding s1 and s2 to the pile_symboles_to_delete
+            automate.addSymboleToDelete(s1);
+            automate.addSymboleToDelete(s2);
             break;
         case MULT:
             automate.decalage(s, new E5);
@@ -180,11 +181,12 @@ bool E8::transition(Automate & automate, Symbole * s) {
         case FIN:
             s1 = (Expr*) automate.popSymbole();
             snotused = (Expr*) automate.popSymbole();
-            //delete snotused;
+            delete snotused;
             s2 = (Expr*) automate.popSymbole();
             automate.reduction(3, new ExprMult(s1, s2));
-            //delete s1;
-            //delete s2;
+            //adding s1 and s2 to the pile_symboles_to_delete
+            automate.addSymboleToDelete(s1);
+            automate.addSymboleToDelete(s2);
             break;
         default:
             automate.decalage(new Symbole(ERREUR), NULL);
@@ -203,10 +205,10 @@ bool E9::transition(Automate & automate, Symbole * s) {
         case CLOSEPAR:
         case FIN:
             snotused = (Expr*) automate.popSymbole();
-            //delete snotused;
+            delete snotused;
             s1 = (Expr*) automate.popSymbole();
-            //snotused = (Expr*) automate.popSymbole();
-            //delete snotused;
+            snotused = (Expr*) automate.popSymbole();
+            delete snotused;
             automate.reduction(4, s1);
             break;
         default:

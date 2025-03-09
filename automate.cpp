@@ -10,10 +10,15 @@ Automate::Automate(Lexer* l) {
     pile_etats.push_back(new E0);
 }
 
+
+
 Automate::~Automate() {
 
 
-    /*
+    while (!pile_symboles_to_delete.empty()) {
+        delete pile_symboles_to_delete.back();
+        pile_symboles_to_delete.pop_back();
+    }
     while (!pile_etats.empty()) {
         delete pile_etats.back();
         pile_etats.pop_back();
@@ -22,9 +27,12 @@ Automate::~Automate() {
         delete pile_symboles.back();
         pile_symboles.pop_back();
     }
-    */
+    
 
     /*
+    for (auto it = pile_symboles_to_delete.begin(); it != pile_symboles_to_delete.end(); it++) {
+        delete *it;
+    }
     for (auto it = pile_etats.begin(); it != pile_etats.end(); it++) {
         delete *it;
     }
@@ -33,7 +41,12 @@ Automate::~Automate() {
     }
     */
 
+    delete lexer;
 
+}
+
+void Automate::addSymboleToDelete(Symbole * s) {
+    pile_symboles_to_delete.push_back(s);
 }
 
 void Automate::decalage(Symbole * s, Etat * e) {
@@ -94,11 +107,13 @@ void Automate::run() {
 
     }
 
+    delete s; //On a fini de lire la chaine de caractères, il faut delete le symbole FIN
+
     cout << "Analyse terminée" << endl;
 
-    eval();
+    
 
-    /*
+    
     if (*pile_symboles.back() == ERREUR) {
         cout << "Erreur de syntaxe" << endl;
     } else {
@@ -106,7 +121,7 @@ void Automate::run() {
         cout << "Valeur de l'expression: ";
         eval();
     }
-    */
+    
 
 
 }
