@@ -29,6 +29,10 @@ class Automate {
 
         void addSymboleToDelete(Symbole * s);
 
+        Lexer * getLexer(){
+            return lexer;
+        }
+
 
     protected:
         Lexer * lexer;

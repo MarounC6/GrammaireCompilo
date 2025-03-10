@@ -88,6 +88,7 @@ bool E3::transition(Automate & automate, Symbole * s) {
 }
 
 bool E4::transition(Automate & automate, Symbole * s) {
+    //Lexer * l;
     switch (*s) {
         case EXPR:
             automate.transitionSimple(s, new E7);
@@ -98,6 +99,15 @@ bool E4::transition(Automate & automate, Symbole * s) {
         case OPENPAR:
             automate.decalage(s, new E2);
             break;
+        
+        /*
+        //Si on a deux plus à la suite, on ignore le second sans renvoyer d'erreur
+        case PLUS:
+            l = automate.getLexer();
+            l->Avancer();
+            delete s; //On delete le second plus de la chaîne d'entrée, il n'est pas dans la pile symboles
+            break;
+        */
         default:
             automate.decalage(new Symbole(ERREUR), NULL);
             return false;
