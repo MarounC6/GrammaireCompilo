@@ -19,7 +19,7 @@ int main(void) {
 
    cout << "Bienvenue dans le programme d'analyse syntaxique d'expressions arithmétiques" << endl;
    cout << "Nous avons décidé de considérer que s'il y a deux (ou plus) symboles '+', on gère l'erreur en gardant le premier (Transition de l'état 4)" << endl;
-   cout << "Tous les autres cas d'erreur de syntaxes arrêtent l'analyse, en indiquant les symboles attendus et reçus" << endl;
+   cout << "Tous les autres cas d'erreur de syntaxes arrêtent l'analyse, en indiquant les symboles attendus et le symbole reçu" << endl;
 
 
    string chaine;//("(1+34)*123)");
