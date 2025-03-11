@@ -19,6 +19,7 @@ bool E0::transition(Automate & automate, Symbole * s) {
             break;
         default:
             automate.decalage(new Symbole(ERREUR),NULL);  // Mettre un etat erreur potentiellement
+            automate.setError("Symboles attendus: EXPR, OPENPAR, INT.\nSymbole reçu: " + Etiquettes[*s]);
             return false;
             break;
     }
@@ -40,6 +41,7 @@ bool E1::transition(Automate & automate, Symbole * s) {
             return false;
         default:
             automate.decalage(new Symbole(ERREUR), NULL);
+            automate.setError("Symboles attendus: PLUS, MULT, FIN.\nSymbole reçu: " + Etiquettes[*s]);
             return false;
     }
     return true;
@@ -58,6 +60,7 @@ bool E2::transition(Automate & automate, Symbole * s) {
             break;
         default:
             automate.decalage(new Symbole(ERREUR), NULL);
+            automate.setError("Symboles attendus: INT, OPENPAR, EXPR.\nSymbole reçu: " + Etiquettes[*s]);
             return false;
     }
     return true;
@@ -82,13 +85,14 @@ bool E3::transition(Automate & automate, Symbole * s) {
             */
         default:
             automate.decalage(new Symbole(ERREUR), NULL);
+            automate.setError("Symboles attendus: PLUS, MULT, CLOSEPAR, FIN.\nSymbole reçu: " + Etiquettes[*s]);
             return false;
     }
     return true;
 }
 
 bool E4::transition(Automate & automate, Symbole * s) {
-    //Lexer * l;
+    Lexer * l;
     switch (*s) {
         case EXPR:
             automate.transitionSimple(s, new E7);
@@ -100,16 +104,19 @@ bool E4::transition(Automate & automate, Symbole * s) {
             automate.decalage(s, new E2);
             break;
         
-        /*
+        
         //Si on a deux plus à la suite, on ignore le second sans renvoyer d'erreur
         case PLUS:
             l = automate.getLexer();
             l->Avancer();
             delete s; //On delete le second plus de la chaîne d'entrée, il n'est pas dans la pile symboles
             break;
-        */
+        
         default:
             automate.decalage(new Symbole(ERREUR), NULL);
+
+            automate.setError("Symboles attendus: EXPR, INT, OPENPAR.\nSymbole reçu: " + Etiquettes[*s]);
+
             return false;
     }
     return true;
@@ -128,6 +135,7 @@ bool E5::transition(Automate & automate, Symbole * s) {
             break;
         default:
             automate.decalage(new Symbole(ERREUR), NULL);
+            automate.setError("Symboles attendus: EXPR, INT, OPENPAR.\nSymbole reçu: " + Etiquettes[*s]);
             return false;
     }
     return true;
@@ -146,6 +154,7 @@ bool E6::transition(Automate & automate, Symbole * s) {
             break;
         default:
             automate.decalage(new Symbole(ERREUR), NULL);
+            automate.setError("Symboles attendus: PLUS, MULT, CLOSEPAR.\nSymbole reçu: " + Etiquettes[*s]);
             return false;
     }
     return true;
@@ -174,6 +183,7 @@ bool E7::transition(Automate & automate, Symbole * s) {
             break;
         default:
             automate.decalage(new Symbole(ERREUR), NULL);
+            automate.setError("Symboles attendus: CLOSEPAR, FIN, PLUS, MULT.\nSymbole reçu: " + Etiquettes[*s]);
             return false;
     }
     return true;
@@ -200,6 +210,7 @@ bool E8::transition(Automate & automate, Symbole * s) {
             break;
         default:
             automate.decalage(new Symbole(ERREUR), NULL);
+            automate.setError("Symboles attendus: PLUS, MULT, CLOSEPAR, FIN.\nSymbole reçu: " + Etiquettes[*s]);
             return false;
     }
     return true;
@@ -223,6 +234,7 @@ bool E9::transition(Automate & automate, Symbole * s) {
             break;
         default:
             automate.decalage(new Symbole(ERREUR), NULL);
+            automate.setError("Symboles attendus: PLUS, MULT, CLOSEPAR, FIN.\nSymbole reçu: " + Etiquettes[*s]);
             return false;
     }
     return true;

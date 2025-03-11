@@ -2,6 +2,8 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
+#include <string>
 #include "lexer.h"
 #include "symbole.h"
 #include "Etat.h"
@@ -33,10 +35,19 @@ class Automate {
             return lexer;
         }
 
+        void setError(string message){
+            error_message = message;
+        }
+
+        string getError(){
+            return error_message;
+        }
+
 
     protected:
         Lexer * lexer;
         vector<Etat*> pile_etats;
         vector<Symbole*> pile_symboles;
         vector<Symbole*> pile_symboles_to_delete;
+        string error_message;
 };

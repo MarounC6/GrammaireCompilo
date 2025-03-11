@@ -116,6 +116,7 @@ void Automate::run() {
     
     if (*pile_symboles.back() == ERREUR) {
         cout << "Erreur de syntaxe" << endl;
+        cout << error_message << endl;
     } else {
         cout << "Expression correcte" << endl;
         cout << "Valeur de l'expression: ";
