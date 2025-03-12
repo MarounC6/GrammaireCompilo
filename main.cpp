@@ -22,6 +22,7 @@ int main(void) {
    cout << "Tous les autres cas d'erreur de syntaxes arrêtent l'analyse, en indiquant les symboles attendus et le symbole reçu" << endl;
    cout << endl;
    cout << "Exemple d'expression valide: (1+34)*123" << endl;
+   cout << "Exemple d'expression valide: (1+(2+(3+(4+(5++0)))))" << endl;
    cout << "Exemple d'expression invalide (renvoie une erreur en arrêtant l'analyse): 1+*2" << endl;
    cout << "Exemple d'expression invalide (renvoie une erreur en arrêtant l'analyse): 1+(2*3" << endl;
    cout << "Exemple d'expression invalide (renvoie une erreur en arrêtant l'analyse): 1+2)" << endl;
