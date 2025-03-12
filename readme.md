@@ -1,5 +1,8 @@
 # Analyseur Lexical
 
+Réalisé par Peter SAAD et Maroun CHAHINE
+4IF - Groupe 3
+
 Ce projet est un analyseur lexical pour une grammaire personnalisée.
 
 Nous avons décidé de considérer que s'il y a deux (ou plus) symboles '+', on gère l'erreur en gardant le premier (Transition de l'état 4)
