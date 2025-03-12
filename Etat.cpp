@@ -68,21 +68,28 @@ bool E2::transition(Automate & automate, Symbole * s) {
 
 bool E3::transition(Automate & automate, Symbole * s) {
     Entier * s1;
+    Expr * e1;
+    Expr * e2;
     switch (*s) {
         case PLUS:
         case MULT:
-        case CLOSEPAR:
-        case FIN:
             s1 = (Entier*) automate.popSymbole();
             automate.reduction(5, new ExprVal(s1->getValeur()));
             delete s1;
             break;
         
-            /*
+
+        //Ici, ça fonctionne même si on met un entier seul comme expression, c'est le but de cette partie du code
+        case CLOSEPAR:
+        case FIN:
             s1 = (Entier*) automate.popSymbole();
-            automate.reduction(5, new ExprPlus(new ExprVal(0), new ExprVal(s1->getValeur())));
+            e1  = new ExprVal(0);
+            e2 = new ExprVal(s1->getValeur());
+            automate.reduction(5, new ExprPlus(e1, e2));
+            delete s1;
+            automate.addSymboleToDelete(e1);
+            automate.addSymboleToDelete(e2);
             break;
-            */
         default:
             automate.decalage(new Symbole(ERREUR), NULL);
             automate.setError("Symboles attendus: PLUS, MULT, CLOSEPAR, FIN.\nSymbole reçu: " + Etiquettes[*s]);
