@@ -15,3 +15,8 @@ Les étapes sont indiquées par le code à partir d'ici.
 
 Nous avons décidé d'implémenter plusieurs classes Expression pour réaliser éventuellement l'arbre d'analyse (non effectué) au lieu d'avoir uniquement une seule classe Expr.
 C'est pour cela que nous avons les classes Symbole, Expr, ExprBin, ExprPlus, ExprMult et ExprVal.
+
+
+Il faut noter que nous avons géré la mémoire de manière à ne pas avoir de fuites de mémoire
+Nous faisions réguilèrement des delete sur les symboles qui ne sont plus utilisés
+Vous pouvez essayer avec valgrind ./go pour vérifier qu'il n'y a pas de fuites de mémoire
