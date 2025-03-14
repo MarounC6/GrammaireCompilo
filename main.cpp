@@ -38,7 +38,7 @@ int main(void) {
    char on = 'y';
    while(on=='y'){
       cout << "Veuillez rentrer une expression arithmétique: ";
-      cin >> chaine;
+      getline(cin, chaine);
 
       Lexer *l = new Lexer(chaine);
       Automate automate(l);

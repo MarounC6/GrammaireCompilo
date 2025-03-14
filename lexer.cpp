@@ -2,6 +2,7 @@
 
 Symbole * Lexer::Consulter() {
    if (!tampon) {
+      while ((tete<static_cast<int> (flux.length()) && flux[tete]==' ') || (tete<static_cast<int> (flux.length()) && flux[tete]=='\t')) tete++;
 
       if (tete== static_cast<int> (flux.length()))
          tampon = new Symbole(FIN);
